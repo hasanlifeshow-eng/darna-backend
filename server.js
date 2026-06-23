@@ -15,7 +15,13 @@ const server = http.createServer(app);
 const io     = new Server(server, { cors: { origin: '*' } });
 const PORT   = process.env.PORT || 3000;
 
-app.use(cors());
+app.use(cors({
+  origin: "*",
+  methods: ["GET","POST","PUT","DELETE","OPTIONS","PATCH"],
+  allowedHeaders: ["Content-Type","Authorization","X-Requested-With"],
+  credentials: false
+}));
+app.options("*", cors());
 app.use(express.json());
 app.use('/api/auth',     authRoutes);
 app.use('/api/messages', messageRoutes);
